@@ -1,6 +1,6 @@
 # TPI
 
-Trabajo Practico Integrador Programacion I
+Trabajo Practico Integrador Programacion II
 
 
 
