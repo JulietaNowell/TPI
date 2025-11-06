@@ -8,6 +8,16 @@ package tpiprogramacionii.entities;
  *
  * @author jnowell
  */
-public class Legajo {
-    
+public class Legajo extends Base  {
+    private String nroLegajo;
+    private String categoria;
+    private Enum estado;
+    private localdate fechaAlta;
+    private String observaciones;
+
+    private static class localdate {
+
+        public localdate() {
+        }
+    }
 }
