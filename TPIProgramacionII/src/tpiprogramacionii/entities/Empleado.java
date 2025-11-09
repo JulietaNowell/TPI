@@ -8,6 +8,19 @@ package tpiprogramacionii.entities;
  *
  * @author jnowell
  */
-public class Empleado {
-    
+
+public class Empleado extends Base {
+    private String nombre;
+    private String apellido;
+    private String dni;
+    private String email;
+    private localdate fechaIngreso;
+    private String area;
+    private Legajo legajo;
+
+    private static class localdate {
+
+        public localdate() {
+        }
+    }
 }

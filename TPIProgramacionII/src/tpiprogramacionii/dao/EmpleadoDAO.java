@@ -8,6 +8,6 @@ package tpiprogramacionii.dao;
  *
  * @author jnowell
  */
-public class EmpleadoDAO {
+public class EmpleadoDAO implements GenericDAO{
     
 }

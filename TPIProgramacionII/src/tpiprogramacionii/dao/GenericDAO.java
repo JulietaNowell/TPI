@@ -8,6 +8,6 @@ package tpiprogramacionii.dao;
  *
  * @author jnowell
  */
-public class LegajoDAO implements GenericDAO {
+public interface GenericDAO<T> {
     
 }
