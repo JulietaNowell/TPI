@@ -1,9 +1,16 @@
 
 package tpiprogramacionii.main;
 
-
+/**
+ * Clase de utilidad encargada de mostrar el menú principal por consola.
+ * No tiene estado ni lógica de negocio: solo imprime las opciones disponibles.
+ */
 public class MenuDisplay {
     
+     /**
+     * Muestra el menú principal de la aplicación y deja el cursor listo
+     * para que el usuario ingrese una opción.
+     */   
      public static void mostrarMenuPrincipal() {
         System.out.println("\n---------- MENU ----------");
         System.out.println("[1] Crear Empleado");

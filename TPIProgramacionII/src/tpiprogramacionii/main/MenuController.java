@@ -11,17 +11,18 @@ import tpiprogramacionii.service.EmpleadoService;
 import tpiprogramacionii.service.LegajoService;
 
 /**
- * Constructor de MenuController.
- * Inicializa el controlador del menú con el Scanner para leer
- * desde consola y el EmpleadoService para realizar las operaciones
- * de negocio sobre empleados. Valida que ambos parámetros no sean null.
- */
+* Controlador principal del menú de la aplicación.
+* Aquí se gestionan todas las interacciones con el usuario.
+*/
 public class MenuController {
          private final Scanner scanner;  
          private EmpleadoService empleadoService;
          private LegajoService legajoService;
-   
-   
+/**
+* Constructor del controlador del menú.
+* Valida que los servicios y el scanner no sean null.
+*/  
+         
          public MenuController(Scanner scanner, EmpleadoService empleadoService,LegajoService legajoService) {
               if (scanner == null) {
                  throw new IllegalArgumentException("Scanner no puede ser null");
@@ -52,16 +53,19 @@ public class MenuController {
             System.out.print("DNI del empleado: ");
             String dni = scanner.nextLine().trim();
             
+            // Email opcional
             System.out.print("Email del empleado (opcional, Enter para omitir): ");
             String emailInput = scanner.nextLine().trim();
 
             String email = emailInput.isEmpty() ? null : emailInput;  //Si el usuario omitio a traves de enter, queda como un string vacio y se setea en NULL. 
-
+            
+            // Área opcional
             System.out.print("Área del empleado (opcional, Enter para omitir): ");
             String areaInput = scanner.nextLine().trim().toUpperCase();
 
             String area = areaInput.isEmpty() ? null : areaInput.toUpperCase();
             
+            // Fecha opcional
             System.out.print("Fecha de ingreso del empleado (opcional, formato yyyy-MM-dd, Enter para omitir): ");
             String fechaStr = scanner.nextLine().trim();
 
@@ -311,7 +315,11 @@ public class MenuController {
     
     }
     
-     
+   /** 
+    * Agregar o modificar campos opcionales.
+    * Permiote ingresar(Categoria, Estado y Observaciones).
+    * Los campos principales del legajo se crear automaticamente al crear un empleado.
+    */  
     public Legajo crearLegajo(){
         
          //Categoria
@@ -418,7 +426,7 @@ public class MenuController {
  */
     public void actualizarEstadoLegajo() { 
         
-        try {
+     try {
         System.out.print("Ingrese el ID del legajo que desea actualizar: ");
         long idLegajo = Long.parseLong(scanner.nextLine().trim());
 
@@ -466,6 +474,62 @@ public class MenuController {
     }
 }
     
+    /**
+     * Actualización del estado de un legajo.
+     * Pide el ID del empleado y la nueva categoria a modificar.
+     * valida la entrada y delega la actualización a empleadoService
+     */
+    public void actualizarCategoriaLegajo(){
+        
+         try {
+        System.out.print("Ingrese el ID del empleado al que desea actualizar la categoría del legajo: ");
+        long idEmpleado = Long.parseLong(scanner.nextLine().trim());
+
+        // Traer el empleado con su legajo
+        Empleado empleado = empleadoService.getById(idEmpleado);
+        if (empleado == null || empleado.getLegajo() == null) {
+            System.out.println("No se encontró un legajo asociado a ese empleado.");
+            return;
+        }
+
+        Legajo legajo = empleado.getLegajo();
+
+        System.out.println("Legajo del empleado encontrado:");
+        System.out.println("ID legajo: " + legajo.getId()
+                + "\nNro legajo: " + legajo.getNroLegajo()
+                + "\nCategoría actual: " + legajo.getCategoria()
+                + "\nEstado: " + legajo.getEstado());
+
+        // Pedir la nueva categoría
+        System.out.print("\nIngrese la nueva categoría: ");
+        String nuevaCategoria = scanner.nextLine().trim().toUpperCase();
+
+        if (nuevaCategoria.isEmpty()) {
+            System.out.println("La categoría no puede estar vacía.");
+            return;
+        }
+
+        // Confirmación
+        System.out.print("¿Confirma el cambio de categoría? (s/n): ");
+        String resp = leerSN();
+        if (!"S".equals(resp)) {
+            System.out.println("Operación cancelada. No se realizaron cambios.");
+            return;
+        }
+
+        // Delegar al service
+        empleadoService.actualizarCategoriaLegajo(idEmpleado, nuevaCategoria);
+
+        System.out.println("Categoría del legajo actualizada correctamente.");
+
+    } catch (NumberFormatException e) {
+        System.err.println("El ID debe ser un número entero.");
+    } catch (Exception e) {
+        System.err.println("Error al actualizar categoría del legajo: " + e.getMessage());
+    }
+ 
+    }
+    
   /**
  * Baja lógica de un legajo.
  * Pide el ID, muestra información para confirmar y, si el
@@ -509,14 +573,14 @@ public class MenuController {
          }
     }
       
-   /**
- * Metodo privado 
- * Para las consulta por si o por no de la interfaz (s/n).
- */ 
+/**
+ * Método utilitario para leer respuestas tipo S/N.
+ */
     private String leerSN() {
     return scanner.nextLine().trim().toUpperCase();
-    }    
-    }
+     }    
+   
+}
      
 
         

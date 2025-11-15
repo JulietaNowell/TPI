@@ -303,6 +303,7 @@ public class EmpleadoDAO implements GenericDAO<Empleado> {
         int idLegajo = rs.getInt("legajo_id");
         if (idLegajo > 0 && !rs.wasNull()) {
             Legajo legajo = new Legajo();
+            legajo.setId((long) idLegajo); 
             legajo.setNroLegajo(rs.getString("nro_legajo"));
             legajo.setCategoria(rs.getString("categoria"));
             
