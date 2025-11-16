@@ -65,11 +65,24 @@ public class EmpleadoService implements GenericService<Empleado> {
             LOGGER.log(Level.INFO, "Empleado insertado con ID: {0}", empleado.getId());
             
             // 2. Crear Legajo automáticamente con el ID del empleado
-            Legajo legajo = new Legajo();
+          
+            Legajo legajo = empleado.getLegajo();
+            legajo = (legajo == null) ? new Legajo() : legajo;
+
             legajo.setNroLegajo("LEG" + String.format("%06d", empleado.getId()));
-            legajo.setCategoria("JUNIOR"); // Categoría por defecto
-            legajo.setEstado(Estado.ACTIVO);
-            legajo.setFechaAlta(new java.util.Date());
+
+            legajo.setCategoria(
+                (legajo.getCategoria() == null) ? "JUNIOR" : legajo.getCategoria()
+            );
+
+            legajo.setEstado(
+                (legajo.getEstado() == null) ? Estado.ACTIVO : legajo.getEstado()
+            );
+
+            legajo.setFechaAlta(
+                (legajo.getFechaAlta() == null) ? new java.util.Date() : legajo.getFechaAlta()
+            );
+            
             
             // 3. Insertar Legajo
             legajoDAO.insertTx(legajo, conn);
