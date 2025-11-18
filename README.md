@@ -208,6 +208,10 @@ TPIProgramacionII/
 
 ---
 
+## Link al video 
+youtube.com/watch?si=VQUuiX6ECuicFDQS&v=yVh0wiCOpFk&feature=youtu.be
+
+
 ## Notas Adicionales
 
 - El sistema utiliza **baja lógica**, por lo que los registros eliminados permanecen en la base de datos con el campo `borrado = TRUE`
